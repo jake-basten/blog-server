@@ -1,7 +1,8 @@
-exports.handler = async (event) => {
-    console.log('IN HELLOWORLD LAMBDA');
+exports.handler = async (event, context) => {
     return {
         statusCode: 200,
-        body: { message: 'Hello World from blog-server!' }
+        headers: {},
+        body: { message: 'Hello World from blog-server!' },
+        isBase64Encoded: false
     };
 }
