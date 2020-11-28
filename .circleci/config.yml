@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  aws-sam-serverless: circleci/aws-sam-serverless@2.1.0
+  sam: circleci/aws-sam-serverless@2.1.0
 
 workflows:
   test_and_deploy:
