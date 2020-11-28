@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk');
 
 exports.handler = async (event) => {
+  console.log('IN GETBLOG LAMBDA');
   const s3Client = new AWS.S3();
   const params = { Bucket: 'jbasten-blog', Key: 'markdowns/test.md' }
 
