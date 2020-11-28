@@ -39,4 +39,4 @@ Resources:
             Method: GET
       Policies:
         - S3ReadPolicy:
-          BucketName: jbasten-blog
+            BucketName: jbasten-blog
