@@ -12,6 +12,11 @@ exports.handler = async (event, context) => {
 
   return {
     statusCode: 200,
-    body: { fileContents: data.Body.toString() }
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true
+    },
+    body: JSON.stringify({ fileContents: data.Body.toString() }),
+    isBase64Encoded: false
   };
 }
