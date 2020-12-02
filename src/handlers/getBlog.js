@@ -1,5 +1,4 @@
 const AWS = require('aws-sdk');
-const { goodResponse } = require('../utils/responseUtil');
 
 exports.handler = async (event, context) => {
   const blogId = event.pathParameters.id;
@@ -12,5 +11,13 @@ exports.handler = async (event, context) => {
     }
   }).promise();
 
-  return goodResponse({ fileContents: data.Body.toString() });
+  return {
+    statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true
+    },
+    body: JSON.stringify({ fileContents: data.Body.toString() }),
+    isBase64Encoded: false
+  };
 }

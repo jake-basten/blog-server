@@ -1,5 +1,11 @@
-const { goodResponse } = require("../utils/responseUtil")
-
 exports.handler = async (event, context) => {
-    return goodResponse({ message: 'Hello World from blog-server!' });
+    return {
+        statusCode: 200,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true
+        },
+        body: JSON.stringify({ message: 'Hello World from blog-server!' }),
+        isBase64Encoded: false
+    };
 }
