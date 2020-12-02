@@ -35,7 +35,7 @@ Resources:
         Api:
           Type: Api
           Properties:
-            Path: /b
+            Path: /blog
             Method: GET
       Policies:
         - S3ReadPolicy:
