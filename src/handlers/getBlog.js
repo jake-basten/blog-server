@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk');
+const { goodResponse } = require('../utils/responseUtil');
 
 exports.handler = async (event, context) => {
   const s3Client = new AWS.S3();
@@ -10,13 +11,5 @@ exports.handler = async (event, context) => {
     }
   }).promise();
 
-  return {
-    statusCode: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true
-    },
-    body: JSON.stringify({ fileContents: data.Body.toString() }),
-    isBase64Encoded: false
-  };
+  return goodResponse({ fileContents: data.Body.toString() });
 }
