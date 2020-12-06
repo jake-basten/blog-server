@@ -13,8 +13,6 @@ exports.handler = async (event, context) => {
     console.log('Error getting s3 object:', e);
   }
 
-  console.log('DATA', data);
-
   let responseBody = {};
   if (data) {
     responseBody.fileContents = data.Body.toString();
@@ -22,7 +20,6 @@ exports.handler = async (event, context) => {
     responseBody.fileContents = '';
     responseBody.errorMessage = `Could not fetch blog with id ${blogId}`
   }
-  
 
   return {
     statusCode: 200,
