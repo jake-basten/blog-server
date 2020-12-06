@@ -1,5 +1,6 @@
 {
     "name": "blog-server",
+    "version": "0.0.1",
     "scripts": {
         "build": "sam build",
         "local": "npm run build && sam local start-api"
