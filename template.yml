@@ -6,11 +6,6 @@ Transform:
 - AWS::Serverless-2016-10-31
 
 Resources:
-  lambdaRole:
-    Type : AWS::IAM::Role
-    Properties:
-
-
   helloWorldFunction:
     Type: AWS::Serverless::Function
     Properties:
