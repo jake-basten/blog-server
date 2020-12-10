@@ -3,7 +3,8 @@
     "version": "0.0.1",
     "scripts": {
         "build": "sam build",
-        "local": "npm run build && sam local start-api"
+        "local": "npm run build && sam local start-api",
+        "localLoadBlog": "sam build && sam local invoke \"loadBlogFunction\" -e data/loadBlogEvent.json"
     },
     "dependencies": {
         "aws-sdk": "^2.799.0"
