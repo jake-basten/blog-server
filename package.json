@@ -4,7 +4,7 @@
     "scripts": {
         "build": "sam build",
         "local": "npm run build && sam local start-api",
-        "localLoadBlog": "npm run createLocalEnv && sam build && sam local invoke \"loadBlogFunction\" -e data/loadBlogEvent.json --env-vars scripts/env.json",
+        "localLoadBlog": "npm run createLocalEnv && sam build && sam local invoke \"loadBlogFunction\" -e data/loadBlogEvent.json --env-vars local_env/env.json",
         "createLocalEnv": "node scripts/createLocalEnv.js"
     },
     "dependencies": {
