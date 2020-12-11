@@ -49,4 +49,6 @@ Resources:
       MemorySize: 128
       Timeout: 100
       Description: Load Blog
+      Layers:
+        - arn:aws:lambda:us-east-1:654733764120:layer:mongo-db:2
       

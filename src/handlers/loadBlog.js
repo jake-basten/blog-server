@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk');
+const { MongoClient } = require("mongodb");
 
 const BUCKET = 'jbasten-blog';
 const PREFIX = 'blogs/assets-loader/';
@@ -37,9 +38,19 @@ exports.handler = async (event, context) => {
   const copyMarkdownData = await s3Client.copyObject(copyMarkdownParams).promise();
   const copyPreviewImageData = await s3Client.copyObject(copyPreviewImageParams).promise();
 
+  const uri = process.env.BLOG_MONGO_CONNECTION;
+  console.log('uri', uri);
+  const client = new MongoClient(uri, { useNewUrlParser: true });
+  client.connect(err => {
+    const collection = client.db("Blog").collection("Blogs");
+    console.log('connected');
+    // perform actions on the collection object
+    client.close();
+  });
+
   if (copyMarkdownData.CopyObjectResult && copyPreviewImageData.CopyObjectResult) {
-    return {message: 'Objects Copied'}
+    return { message: 'Objects Copied' }
   } else {
-    return {error: 'Copy Failed'}
+    return { error: 'Copy Failed' }
   }
 }
