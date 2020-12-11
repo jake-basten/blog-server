@@ -2,4 +2,4 @@ node_modules/
 dist/
 .DS_Store
 .aws-sam/
-scripts/env.json
+env.json
