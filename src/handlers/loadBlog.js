@@ -1,10 +1,31 @@
 const AWS = require('aws-sdk');
-const { MongoClient } = require("mongodb");
+const MongoClient = require("mongodb").MongoClient;
 
 const BUCKET = 'jbasten-blog';
 const PREFIX = 'blogs/assets-loader/';
 
+const connectToDB = (uri) => {
+  return MongoClient.connect(uri, { useUnifiedTopology: true })
+    .then(db => {
+      console.log('connected to db');
+      cachedDb = db;
+      return cachedDb;
+    });
+}
+
+const insertRecordIntoDB = (connection, record) => {
+  return connection.db('Blog').collection('Blogs').insertOne(record)
+    .then(() => {
+      console.log("1 document inserted");
+    })
+    .catch(err => {
+      console.log('err', err);
+    });
+}
+
 exports.handler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
   const id = event.id;
   const title = event.title;
 
@@ -37,14 +58,18 @@ exports.handler = async (event, context) => {
 
   const copyMarkdownData = await s3Client.copyObject(copyMarkdownParams).promise();
   const copyPreviewImageData = await s3Client.copyObject(copyPreviewImageParams).promise();
+
   const uri = process.env.BLOG_MONGO_CONNECTION;
-  const client = new MongoClient(uri, { useNewUrlParser: true });
-  client.connect(err => {
-    const collection = client.db("Blog").collection("Blogs");
-    console.log('connected');
-    // perform actions on the collection object
-    client.close();
-  });
+  const connection = await connectToDB(uri);
+
+  const testObj = {
+    _id: {
+      id: 1
+    },
+    foo: 'bar'
+  };
+
+  insertRecordIntoDB(connection, testObj);
 
   if (copyMarkdownData.CopyObjectResult && copyPreviewImageData.CopyObjectResult) {
     return { message: 'Objects Copied' }
