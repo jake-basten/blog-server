@@ -27,8 +27,6 @@ Resources:
     Properties:
       Handler: src/handlers/getBlog.handler
       Runtime: nodejs12.x
-      Layers:
-        - arn:aws:lambda:us-east-1:654733764120:layer:aws-sdk:1
       Role: arn:aws:iam::654733764120:role/lambdaRole
       MemorySize: 128
       Timeout: 100
