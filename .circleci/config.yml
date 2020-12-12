@@ -12,4 +12,4 @@ workflows:
           template: template.yml
           s3-bucket: $AWS_ARTIFACT_BUCKET
           environment:
-              BLOG_MONGO_CONNECTION: $BLOG_MONGO_CONNECTION
+            - BLOG_MONGO_CONNECTION: $BLOG_MONGO_CONNECTION
