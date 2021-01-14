@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 const MongoClient = require("mongodb").MongoClient;
 
 const BUCKET = 'jbasten-blog';
-const PREFIX = 'blogs/assets-loader/';
+const PREFIX = 'assets-loader/';
 
 const connectToDB = (uri) => {
   return MongoClient.connect(uri, { useUnifiedTopology: true })
