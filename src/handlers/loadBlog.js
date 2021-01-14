@@ -3,6 +3,11 @@ const MongoClient = require("mongodb").MongoClient;
 
 const BUCKET = 'jbasten-blog';
 const PREFIX = 'assets-loader/';
+const SOURCE_BUCKET_PARAMS = {
+  Bucket: BUCKET,
+  Delimiter: '/',
+  Prefix: PREFIX
+};
 
 const connectToDB = (uri) => {
   return MongoClient.connect(uri, { useUnifiedTopology: true })
@@ -33,13 +38,8 @@ exports.handler = async (event, context) => {
   const previewImageFileName = `${id}.png`;
 
   const s3Client = new AWS.S3();
-  const sourceBucketParams = {
-    Bucket: BUCKET,
-    Delimiter: '/',
-    Prefix: PREFIX
-  };
 
-  const objectsReturnedFromS3BlogLoader = await s3Client.listObjects(sourceBucketParams).promise();
+  const objectsReturnedFromS3BlogLoader = await s3Client.listObjects(SOURCE_BUCKET_PARAMS).promise();
   const sourceAssets = objectsReturnedFromS3BlogLoader.Contents.filter(item => item.Size > 0);
   const markdown = sourceAssets.find(item => item.Key.endsWith(markdownFileName));
   const previewImage = sourceAssets.find(item => item.Key.endsWith(previewImageFileName));
