@@ -3,7 +3,7 @@ const AWS = require('aws-sdk');
 exports.handler = async (event, context) => {
   const blogId = event.pathParameters.id;
   const s3Client = new AWS.S3();
-  const params = { Bucket: 'jbasten-blog', Key: `markdowns/${blogId}.md` }
+  const params = { Bucket: 'jbasten-blog', Key: `blogs/${blogId}/${blogId}.md` }
 
   let data;
 
