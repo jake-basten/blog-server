@@ -7,7 +7,9 @@ workflows:
   build_and_deploy:
     jobs:
       - sam/deploy:
+          context:
+            - BLOG_PROD
           name: deploy
           stack-name: blog-server
           template: template.yml
-          s3-bucket: $AWS_ARTIFACT_BUCKET
+          s3-bucket: serverless-artifacts
