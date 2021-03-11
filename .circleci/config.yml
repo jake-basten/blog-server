@@ -8,6 +8,8 @@ workflows:
     jobs:
       - sam/deploy:
           name: deploy
+          context:
+            - BLOG_PROD
           stack-name: blog-server
           template: template.yml
-          s3-bucket: serverless-artifacts
+          s3-bucket: servless-artifacts
