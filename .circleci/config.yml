@@ -31,7 +31,7 @@ jobs:
     steps:
       - run:
           name: where am i
-          command: ech $PWD && ls
+          command: echo $PWD && ls
       - run:
           name: Install Packages
           command: cd src/lambda-layer && npm install
