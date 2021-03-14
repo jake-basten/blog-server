@@ -25,15 +25,15 @@ jobs:
           paths: .
 
   build_lambda_layer:
-    working_directory: ~/blog-server/src/lambda-layer
+    working_directory: ~/blog-server/
     docker:
       - image: node:15.3.0
     steps:
       - run:
           name: Install Packages
-          command: npm install
+          command: cd src/lambda-layer && npm install
       - persist_to_workspace:
-          root: ~/blog-server/src/lambda-layer
+          root: ~/blog-server
           paths: .
 
   deploy_lambda_layer:
