@@ -18,7 +18,7 @@ jobs:
           command: npm install typescript
       - run:
           name: Compile
-          command: npm run compile
+          command: tsc
       - persist_to_workspace:
           root: ~/blog-server
           paths: .
