@@ -51,9 +51,6 @@ jobs:
       - run:
           <<: *install_aws_cli
       - run:
-          name: Where am i
-          command: echo $PWD && ls
-      - run:
           name: Zip Lambda Layer
           command: zip -r blog-server-lambda-layer.zip src/lambda-layer
       - run:
@@ -77,6 +74,8 @@ workflows:
       - deploy_lambda_layer:
           requires:
             - build_lambda_layer
+          context:
+            - BLOG_PROD
       - sam/deploy:
           name: build_and_deploy_sam_app
           context:
