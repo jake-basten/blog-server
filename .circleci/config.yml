@@ -21,7 +21,7 @@ jobs:
           command: ls
       - run:
           name: Compile
-          command: tsc
+          command: npm run compile
       - persist_to_workspace:
           root: ~/blog-server
           paths: .
