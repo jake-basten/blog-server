@@ -6,6 +6,16 @@ Transform:
 - AWS::Serverless-2016-10-31
 
 Resources:
+  BlogServerLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: blog-server-layer
+      Description: Dependencies for sam app blog-server
+      ContentUri: s3://jbasten-serverless-artifacts/blog-server-lambda-layer.zip
+      CompatibleRuntimes:
+        - nodejs12.x
+      RetentionPolicy: Retain
+
   healthCheckFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -41,13 +51,3 @@ Resources:
           Properties:
             Path: /blog/{id}
             Method: GET
-
-  BlogServerLayer:
-    Type: AWS::Serverless::LayerVersion
-    Properties:
-      LayerName: blog-server-layer
-      Description: Dependencies for sam app blog-server
-      ContentUri: s3://jbasten-serverless-artifacts/blog-server-lambda-layer.zip
-      CompatibleRuntimes:
-        - nodejs12.x
-      RetentionPolicy: Retain
