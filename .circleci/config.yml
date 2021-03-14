@@ -1,11 +1,50 @@
 version: 2.1
 
+dependencies: &dependencies
+  name: Install Dependencies
+  command: pip install awscli --upgrade
+
 orbs:
   sam: circleci/aws-sam-serverless@2.1.0
+
+jobs:
+  compile_with_typescript:
+    working_directory: ~/blog-server
+    docker:
+      - image: node:15.3.0
+    steps:
+      - run:
+          name: Install Typescript
+          command: npm install typescript
+      - run:
+          name: Compile
+          command: npm run compile
+      - persist_to_workspace:
+          root: ~/blog-server
+          paths: .
+
+  build_and_deploy_lambda_layer:
+    working_directory: ~/blog-server/src/lambda-layer
+    docker:
+      - image: node:15.3.0
+    steps:
+      - run:
+          name: Install Packages
+          command: npm install
+      - run:
+          <<: *dependencies
+      - run:
+          name: Deploy Layer
+          command: ./../../deployment/deployLambdaLayer.sh
+
 
 workflows:
   build-and-deploy:
     jobs:
+      - compile_with_typescript
+      - build_and_deploy_lambda_layer:
+          requires:
+            - compile_with_typescript
       - sam/deploy:
           name: deploy
           context:
@@ -13,3 +52,5 @@ workflows:
           stack-name: blog-server
           template: template.yml
           s3-bucket: jbasten-serverless-artifacts
+          requires:
+            - build_and_deploy_lambda_layer
