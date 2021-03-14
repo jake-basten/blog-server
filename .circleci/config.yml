@@ -25,7 +25,7 @@ jobs:
           paths: .
 
   build_lambda_layer:
-    working_directory: ~/blog-server/
+    working_directory: ~/blog-server
     docker:
       - image: node:15.3.0
     steps:
