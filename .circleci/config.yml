@@ -24,7 +24,7 @@ jobs:
           root: ~/blog-server
           paths: .
 
-  build_and_deploy_lambda_layer:
+  build_lambda_layer:
     working_directory: ~/blog-server/src/lambda-layer
     docker:
       - image: node:15.3.0
@@ -32,20 +32,31 @@ jobs:
       - run:
           name: Install Packages
           command: npm install
+      - persist_to_workspace:
+          root: ~/blog-server/src/lambda-layer
+          paths: .
+
+  deploy_lambda_layer:
+    working_directory: ~/blog-server/src/lambda-layer
+    docker:
+      - image: cimg/python:3.7
+    steps:
       - run:
           <<: *dependencies
       - run:
           name: Deploy Layer
           command: ./../../deployment/deployLambdaLayer.sh
 
-
 workflows:
   build-and-deploy:
     jobs:
       - compile_with_typescript
-      - build_and_deploy_lambda_layer:
+      - build_lambda_layer:
           requires:
             - compile_with_typescript
+      - deploy_lambda_layer:
+          requires:
+            - build_lambda_layer
       - sam/deploy:
           name: deploy
           context:
@@ -54,4 +65,4 @@ workflows:
           template: template.yml
           s3-bucket: jbasten-serverless-artifacts
           requires:
-            - build_and_deploy_lambda_layer
+            - deploy_lambda_layer
