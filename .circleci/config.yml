@@ -29,6 +29,8 @@ jobs:
     docker:
       - image: node:15.3.0
     steps:
+      - attach_workspace:
+            at: ~/blog-server
       - run:
           name: where am i
           command: echo $PWD && ls
@@ -44,6 +46,8 @@ jobs:
     docker:
       - image: cimg/python:3.7
     steps:
+      - attach_workspace:
+          at: ~/blog-server
       - run:
           <<: *install_aws_cli
       - run:
