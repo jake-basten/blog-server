@@ -1,24 +1,32 @@
+import {APIGatewayProxyEvent} from "aws-lambda";
+
 const AWS = require('aws-sdk');
+
+type GetBlogResponse = {
+  fileContents?: string;
+  imagePath?: string;
+  errorMessage?: string;
+}
 
 const BUCKET = 'jbasten-blog';
 
-exports.handler = async (event, context) => {
-  const blogId = event.pathParameters.id;
+exports.handler = async (event: APIGatewayProxyEvent) => {
+  const blogId = event.pathParameters?.id;
   const s3Client = new AWS.S3();
-  const markdownParams = { Bucket: BUCKET, Key: `blogs/${blogId}/${blogId}.md` };
-  const imageParams = { Bucket: BUCKET, Key: `blogs/${blogId}/${blogId}.png` };
-
+  const markdownParams = {Bucket: BUCKET, Key: `blogs/${blogId}/${blogId}.md`};
+  const imageParams = {Bucket: BUCKET, Key: `blogs/${blogId}/${blogId}.png`};
+  
   let markdownData;
   let imageData;
-
+  
   try {
     markdownData = await s3Client.getObject(markdownParams).promise();
     imageData = await s3Client.getObject(imageParams).promise();
   } catch (e) {
     console.log('Error getting blog data from s3:', e);
   }
-
-  let responseBody = {};
+  
+  let responseBody: GetBlogResponse = {};
   if (markdownData && imageData) {
     responseBody.fileContents = markdownData.Body.toString();
     responseBody.imagePath = `https://jbasten-blog.s3.amazonaws.com/blogs/${blogId}/${blogId}.png`;
@@ -26,7 +34,7 @@ exports.handler = async (event, context) => {
     responseBody.fileContents = '';
     responseBody.errorMessage = `Could not fetch blog with id ${blogId}`
   }
-
+  
   return {
     statusCode: 200,
     headers: {
