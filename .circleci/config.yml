@@ -19,6 +19,9 @@ jobs:
       - run:
           name: Compile
           command: tsc
+      - run:
+          name: PWD
+          command: ech $PWD
       - persist_to_workspace:
           root: ~/blog-server
           paths: .
