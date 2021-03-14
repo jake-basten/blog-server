@@ -17,11 +17,11 @@ jobs:
           name: Install Typescript
           command: npm install typescript
       - run:
-          name: Compile
-          command: tsc
-      - run:
           name: PWD
           command: ech $PWD
+      - run:
+          name: Compile
+          command: tsc
       - persist_to_workspace:
           root: ~/blog-server
           paths: .
