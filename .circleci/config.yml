@@ -37,12 +37,15 @@ jobs:
           paths: .
 
   deploy_lambda_layer:
-    working_directory: ~/blog-server/
+    working_directory: ~/blog-server
     docker:
       - image: cimg/python:3.7
     steps:
       - run:
           <<: *install_aws_cli
+      - run:
+          name: Where am i
+          command: echo $PWD && ls
       - run:
           name: Zip Lambda Layer
           command: zip -r blog-server-lambda-layer.zip src/lambda-layer
