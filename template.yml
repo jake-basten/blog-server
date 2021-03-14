@@ -6,22 +6,6 @@ Transform:
 - AWS::Serverless-2016-10-31
 
 Resources:
-  helloWorldFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/helloWorld.handler
-      Runtime: nodejs12.x
-      Role: arn:aws:iam::654733764120:role/lambdaRole
-      MemorySize: 128
-      Timeout: 100
-      Description: Hello World
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /
-            Method: GET
-
   getBlogFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -37,18 +21,3 @@ Resources:
           Properties:
             Path: /blog/{id}
             Method: GET
-
-  loadBlogFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/loadBlog.handler
-      Runtime: nodejs12.x
-      Role: arn:aws:iam::654733764120:role/lambdaRole
-      MemorySize: 128
-      Timeout: 100
-      Description: Load Blog
-      Layers:
-        - arn:aws:lambda:us-east-1:654733764120:layer:mongo-db:2
-      Environment:
-        Variables:
-          BLOG_MONGO_CONNECTION: 'mongodb+srv://blogDbLoader:bl0gLo4der@blog.oetvt.mongodb.net/Blog?retryWrites=true&w=majority'
