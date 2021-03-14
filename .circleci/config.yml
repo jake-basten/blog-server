@@ -13,9 +13,7 @@ jobs:
     docker:
       - image: node:15.3.0
     steps:
-      - restore_cache:
-          keys:
-            - dependency-cache-{{ checksum "package.json" }}
+      - checkout
       - run:
           name: Install Typescript
           command: npm install typescript
