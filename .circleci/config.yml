@@ -18,7 +18,7 @@ jobs:
           command: npm install typescript
       - run:
           name: PWD
-          command: ech $PWD
+          command: echo $PWD
       - run:
           name: Compile
           command: tsc
