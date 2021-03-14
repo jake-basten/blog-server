@@ -30,6 +30,9 @@ jobs:
       - image: node:15.3.0
     steps:
       - run:
+          name: where am i
+          command: ech $PWD && ls
+      - run:
           name: Install Packages
           command: cd src/lambda-layer && npm install
       - persist_to_workspace:
