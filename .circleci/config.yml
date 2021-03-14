@@ -32,9 +32,6 @@ jobs:
       - attach_workspace:
             at: ~/blog-server
       - run:
-          name: where am i
-          command: echo $PWD && ls
-      - run:
           name: Install Packages
           command: cd src/lambda-layer && npm install
       - persist_to_workspace:
@@ -58,11 +55,11 @@ jobs:
           command: aws s3 cp blog-server-lambda-layer.zip s3://jbasten-serverless-artifacts
       - run:
           name: Publish Lambda Layer
-          command: aws lambda publish-layer-version \
-            --layer-name blog-server-layer \
-            --description "Dependencies for blog-server" \
-            --content S3Bucket=jbasten-serverless-artifacts,S3Key=blog-server-lambda-layer.zip \
-            --compatible-runtimes nodejs12.x
+          command: aws lambda publish-layer-version
+                  --layer-name blog-server-layer
+                  --description "Dependencies for blog-server"
+                  --content S3Bucket=jbasten-serverless-artifacts,S3Key=blog-server-lambda-layer.zip
+                  --compatible-runtimes nodejs12.x
 
 workflows:
   build-and-deploy:
